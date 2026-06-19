@@ -607,6 +607,10 @@
             <option value="fit">Fit score</option>
           </select>
         </div>
+        <div class="field">
+          <label for="lastDays">Last X days</label>
+          <input id="lastDays" type="number" min="1" step="1" placeholder="Anytime">
+        </div>
       </div>
 
       <div class="summary-row">
@@ -785,6 +789,7 @@
       category: "All",
       region: "All",
       fit: "All",
+      lastDays: "",
       sortKey: "posted",
       sortDir: "desc",
       applied: loadApplied()
@@ -797,6 +802,7 @@
     const categorySelect = document.getElementById("category");
     const regionSelect = document.getElementById("region");
     const sortKeySelect = document.getElementById("sortKey");
+    const lastDaysInput = document.getElementById("lastDays");
 
     function loadApplied() {
       try {
@@ -841,6 +847,16 @@
       return { High: 3, Medium: 2, Watch: 1 }[fit] || 0;
     }
 
+    function withinLastDays(date, days) {
+      if (!days) return true;
+      const value = Number(days);
+      if (!Number.isFinite(value) || value <= 0) return true;
+      const now = new Date("2026-06-19T00:00:00Z");
+      const then = new Date(date + "T00:00:00Z");
+      const diff = Math.round((now - then) / 86400000);
+      return diff <= value;
+    }
+
     function matches(job) {
       const haystack = [
         job.title,
@@ -855,8 +871,9 @@
       const categoryOk = state.category === "All" || job.category === state.category;
       const regionOk = state.region === "All" || job.region === state.region;
       const fitOk = state.fit === "All" || job.fit === state.fit;
+      const daysOk = withinLastDays(job.posted, state.lastDays);
 
-      return searchOk && categoryOk && regionOk && fitOk;
+      return searchOk && categoryOk && regionOk && fitOk && daysOk;
     }
 
     function sortJobs(jobs) {
@@ -987,6 +1004,11 @@
 
       sortKeySelect.addEventListener("change", (event) => {
         state.sortKey = event.target.value;
+        renderBoard();
+      });
+
+      lastDaysInput.addEventListener("input", (event) => {
+        state.lastDays = event.target.value.trim();
         renderBoard();
       });
 
