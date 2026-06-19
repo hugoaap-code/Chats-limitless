@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remote Jobs Hugo - Curated board</title>
+  <meta name="description" content="Curated remote marketing roles for Hugo, organized by category, location, fit, and publication date.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f6f0e6;
+      --surface: rgba(255, 252, 246, 0.82);
+      --surface-strong: #fffaf3;
+      --ink: #201912;
+      --muted: #6d6156;
+      --line: rgba(32, 25, 18, 0.14);
+      --accent: #c4562d;
+      --accent-soft: rgba(196, 86, 45, 0.12);
+      --green: #0f7b56;
+      --green-soft: rgba(15, 123, 86, 0.12);
+      --shadow: 0 24px 60px rgba(71, 47, 25, 0.12);
+      --radius-xl: 30px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Manrope", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(196, 86, 45, 0.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(15, 123, 86, 0.14), transparent 22%),
+        linear-gradient(180deg, #fbf6ee 0%, var(--bg) 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(32, 25, 18, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(32, 25, 18, 0.025) 1px, transparent 1px);
+      background-size: 22px 22px;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    select,
+    input {
+      font: inherit;
+    }
+
+    .shell {
+      width: min(1120px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 36px 0 64px;
+    }
+
+    .hero {
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(18px);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -100px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(196, 86, 45, 0.2), transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.45fr 0.95fr;
+      gap: 24px;
+      padding: 34px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.5);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(196, 86, 45, 0.12);
+    }
+
+    h1 {
+      margin: 18px 0 14px;
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 400;
+      line-height: 0.94;
+      letter-spacing: -0.03em;
+      max-width: 10ch;
+    }
+
+    .lede {
+      max-width: 60ch;
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .meta-row,
+    .stat-grid,
+    .toolbar,
+    .summary-row,
+    .filters,
+    .board,
+    .footer-note {
+      animation: rise 420ms ease both;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .meta-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .hero-card {
+      align-self: stretch;
+      display: grid;
+      gap: 14px;
+      padding: 22px;
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 248, 239, 0.78));
+      border: 1px solid rgba(32, 25, 18, 0.08);
+    }
+
+    .hero-card h2 {
+      margin: 0;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .hero-card ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .hero-card li {
+      display: grid;
+      gap: 4px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed var(--line);
+    }
+
+    .hero-card li:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .hero-card strong {
+      font-size: 15px;
+    }
+
+    .hero-card span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .stat {
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(32, 25, 18, 0.08);
+      box-shadow: 0 8px 24px rgba(71, 47, 25, 0.05);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 34px;
+      line-height: 1;
+      margin-bottom: 10px;
+      letter-spacing: -0.04em;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .toolbar {
+      margin-top: 20px;
+      display: grid;
+      gap: 16px;
+      padding: 20px;
+      border-radius: 24px;
+      background: rgba(255, 252, 246, 0.8);
+      border: 1px solid rgba(32, 25, 18, 0.08);
+      box-shadow: 0 10px 28px rgba(71, 47, 25, 0.06);
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr 1fr;
+      gap: 12px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .field select,
+    .field input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--ink);
+      outline: none;
+    }
+
+    .field select:focus,
+    .field input:focus,
+    .chip-button:focus,
+    .job-card:focus-within {
+      border-color: rgba(196, 86, 45, 0.5);
+      box-shadow: 0 0 0 4px rgba(196, 86, 45, 0.12);
+    }
+
+    .summary-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip-button {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--ink);
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .chip-button:hover {
+      transform: translateY(-1px);
+      border-color: rgba(32, 25, 18, 0.26);
+    }
+
+    .chip-button.active {
+      background: var(--ink);
+      color: #fff7ef;
+      border-color: transparent;
+    }
+
+    .board {
+      margin-top: 24px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .job-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      padding: 20px;
+      border-radius: 24px;
+      background: var(--surface-strong);
+      border: 1px solid rgba(32, 25, 18, 0.08);
+      box-shadow: 0 14px 32px rgba(71, 47, 25, 0.07);
+      transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+    }
+
+    .job-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 36px rgba(71, 47, 25, 0.11);
+    }
+
+    .job-card.applied {
+      opacity: 0.62;
+    }
+
+    .job-main {
+      display: grid;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .job-top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .job-title {
+      font-size: 22px;
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .job-card.applied .job-title {
+      text-decoration: line-through;
+      text-decoration-thickness: 2px;
+    }
+
+    .mini-tag,
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .mini-tag {
+      background: rgba(32, 25, 18, 0.06);
+      color: var(--muted);
+    }
+
+    .pill-fit-high {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .pill-fit-medium {
+      background: rgba(212, 141, 45, 0.14);
+      color: #98601f;
+    }
+
+    .pill-fit-watch {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .job-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .job-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+      max-width: 72ch;
+    }
+
+    .job-actions {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+      justify-items: end;
+      min-width: 172px;
+    }
+
+    .job-actions a,
+    .job-actions button {
+      width: 100%;
+      text-align: center;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform 180ms ease, opacity 180ms ease, border-color 180ms ease;
+    }
+
+    .job-actions a:hover,
+    .job-actions button:hover {
+      transform: translateY(-1px);
+    }
+
+    .primary-link {
+      background: var(--ink);
+      color: #fff7ef;
+      font-weight: 700;
+    }
+
+    .secondary-button {
+      background: rgba(255, 255, 255, 0.72);
+      border-color: var(--line);
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .job-card.applied .secondary-button {
+      background: rgba(15, 123, 86, 0.1);
+      border-color: rgba(15, 123, 86, 0.24);
+      color: var(--green);
+    }
+
+    .empty {
+      text-align: center;
+      padding: 34px 20px;
+      border-radius: 24px;
+      background: rgba(255, 252, 246, 0.72);
+      border: 1px dashed var(--line);
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      padding: 18px 20px;
+      border-radius: 20px;
+      border: 1px solid rgba(32, 25, 18, 0.08);
+      background: rgba(255, 252, 246, 0.72);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid,
+      .filters,
+      .stat-grid,
+      .job-card {
+        grid-template-columns: 1fr;
+      }
+
+      .job-actions {
+        justify-items: stretch;
+        min-width: 0;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        width: min(100vw - 20px, 1120px);
+        padding-top: 18px;
+      }
+
+      .hero-grid,
+      .toolbar,
+      .job-card {
+        padding: 18px;
+      }
+
+      h1 {
+        max-width: 12ch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">
+            <span class="dot"></span>
+            Curated on June 19, 2026
+          </div>
+          <h1>Remote Jobs Hugo</h1>
+          <p class="lede">
+            A hand-kept board for remote marketing roles that look at least somewhat relevant for Hugo:
+            growth, paid media, analytics, content, partner marketing, and ecommerce-adjacent work.
+            Every card links straight to the live listing.
+          </p>
+          <div class="meta-row">
+            <span class="meta-chip">Sorted by publication date or board-added date</span>
+            <span class="meta-chip">Manual curation from live boards</span>
+            <span class="meta-chip">Applied state saved in your browser</span>
+          </div>
+        </div>
+        <aside class="hero-card">
+          <h2>What this board is optimizing for</h2>
+          <ul>
+            <li>
+              <strong>Brazil-first or timezone-friendly</strong>
+              <span>Priority goes to roles open to Brazil, LatAm, or worldwide instead of US-only roles.</span>
+            </li>
+            <li>
+              <strong>Marketing work with real overlap</strong>
+              <span>Performance, paid media, growth, analytics, content, ecommerce, and partner marketing.</span>
+            </li>
+            <li>
+              <strong>Fast scanning</strong>
+              <span>Sort by freshness, filter by category or fit, and mark jobs as applied to clear visual clutter.</span>
+            </li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section class="stat-grid" id="stats"></section>
+
+    <section class="toolbar">
+      <div class="filters">
+        <div class="field">
+          <label for="search">Search</label>
+          <input id="search" type="search" placeholder="Company, title, note or source">
+        </div>
+        <div class="field">
+          <label for="category">Category</label>
+          <select id="category"></select>
+        </div>
+        <div class="field">
+          <label for="region">Region</label>
+          <select id="region"></select>
+        </div>
+        <div class="field">
+          <label for="sortKey">Sort by</label>
+          <select id="sortKey">
+            <option value="posted">Publication date</option>
+            <option value="added">Date added to board</option>
+            <option value="fit">Fit score</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="summary-row">
+        <div id="summary">Loading jobs...</div>
+        <div class="chip-group">
+          <button class="chip-button active" data-sort-dir="desc">Newest first</button>
+          <button class="chip-button" data-sort-dir="asc">Oldest first</button>
+          <button class="chip-button active" data-fit="All">All fits</button>
+          <button class="chip-button" data-fit="High">High fit</button>
+          <button class="chip-button" data-fit="Medium">Medium fit</button>
+          <button class="chip-button" data-fit="Watch">Watchlist</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="board" id="board"></section>
+
+    <section class="footer-note">
+      Posting dates marked from relative board copy were normalized against <strong>June 19, 2026</strong>.
+      This page is meant for fast triage, not as a perfect applicant tracker. Always confirm location
+      eligibility and whether the listing is still open before investing time in the application.
+    </section>
+  </div>
+
+  <script>
+    const JOBS = [
+      {
+        title: "Video Content Strategist / Storyboards",
+        company: "Spiralyze",
+        category: "Content",
+        region: "Worldwide",
+        fit: "High",
+        posted: "2026-06-16",
+        added: "2026-06-19",
+        source: "We Work Remotely",
+        url: "https://weworkremotely.com/remote-jobs/spiralyze-video-content-strategist-storyboards-1",
+        note: "Fresh content role with strong brand/storytelling overlap and a clear growth path. Exact posting date inferred from 'Posted on 3 days ago' on June 19, 2026."
+      },
+      {
+        title: "TikTok Shop Growth Strategist",
+        company: "Power Digital",
+        category: "Growth",
+        region: "Brazil",
+        fit: "High",
+        posted: "2026-06-11",
+        added: "2026-06-19",
+        source: "DailyRemote",
+        url: "https://dailyremote.com/remote-job/tik-tok-shop-growth-strategist-5132072",
+        note: "Brazil-based and very relevant to growth, ecommerce, affiliate, and social commerce. Exact date inferred from 'Posted 8 days ago' on June 19, 2026."
+      },
+      {
+        title: "Media Buyer",
+        company: "Proppel",
+        category: "Paid Media",
+        region: "LatAm",
+        fit: "High",
+        posted: "2026-06-12",
+        added: "2026-06-19",
+        source: "Remotive",
+        url: "https://remotive.com/remote/jobs/marketing/media-buyer-4754889",
+        note: "One of the cleanest paid-media fits here. Explicitly open to Brazil, Colombia, Argentina, and Mexico. Exact date inferred from 'Posted 1wk ago' on June 19, 2026."
+      },
+      {
+        title: "Partner Marketing Programs Manager",
+        company: "Avalara",
+        category: "Partner Marketing",
+        region: "Brazil-Friendly",
+        fit: "Medium",
+        posted: "2026-05-20",
+        added: "2026-06-19",
+        source: "Remotive",
+        url: "https://remotive.com/remote/jobs/marketing/partner-marketing-programs-manager-4489176",
+        note: "Older, but the role specifically mentions being based in Brazil and collaborating across U.S. time zones. Date inferred from 'Posted 1mth ago' on June 19, 2026."
+      },
+      {
+        title: "Marketing Data Scientist",
+        company: "Toptal",
+        category: "Analytics",
+        region: "Worldwide",
+        fit: "Medium",
+        posted: "2026-05-27",
+        added: "2026-06-19",
+        source: "We Work Remotely",
+        url: "https://weworkremotely.com/remote-jobs/toptal-marketing-data-scientist",
+        note: "Strong analytics and ROI angle. More technical than your usual growth lane, but still close enough to performance marketing measurement. Date inferred from 'Posted 23 days ago' on June 19, 2026."
+      },
+      {
+        title: "Social Commerce Coordinator",
+        company: "Podean",
+        category: "Social Commerce",
+        region: "Worldwide",
+        fit: "Medium",
+        posted: "2026-05-26",
+        added: "2026-06-19",
+        source: "We Work Remotely",
+        url: "https://weworkremotely.com/remote-jobs/podean-social-commerce-coordinator",
+        note: "Early-career leaning, but the mix of TikTok Shop, reporting, budgets, and ecommerce ops makes it worth keeping on the radar. Date inferred from 'Posted 24 days ago' on June 19, 2026."
+      },
+      {
+        title: "Catalog Analyst",
+        company: "Podean",
+        category: "Ecommerce Ops",
+        region: "Brazil",
+        fit: "Watch",
+        posted: "2026-05-26",
+        added: "2026-06-19",
+        source: "We Work Remotely",
+        url: "https://weworkremotely.com/remote-jobs/podean-catalog-analyst",
+        note: "Brazil-based and remote, but tilted more toward marketplace operations than core growth/performance. Date inferred from 'Posted 24 days ago' on June 19, 2026."
+      },
+      {
+        title: "Affiliate Marketing Manager (Fluent in Portuguese)",
+        company: "Acceleration Partners",
+        category: "Affiliate",
+        region: "LatAm",
+        fit: "Watch",
+        posted: "2026-05-19",
+        added: "2026-06-19",
+        source: "DailyRemote",
+        url: "https://dailyremote.com/remote-job/affiliate-marketing-manager-fluent-in-portuguese-5007670",
+        note: "Interesting affiliate-growth angle, but the listing text says candidates need to reside in the U.S. or Mexico. Kept here as watchlist only. Date inferred from 'Posted a month ago' on June 19, 2026."
+      }
+    ];
+
+    const storageKey = "remote-jobs-hugo-applied";
+    const state = {
+      search: "",
+      category: "All",
+      region: "All",
+      fit: "All",
+      sortKey: "posted",
+      sortDir: "desc",
+      applied: loadApplied()
+    };
+
+    const board = document.getElementById("board");
+    const stats = document.getElementById("stats");
+    const summary = document.getElementById("summary");
+    const searchInput = document.getElementById("search");
+    const categorySelect = document.getElementById("category");
+    const regionSelect = document.getElementById("region");
+    const sortKeySelect = document.getElementById("sortKey");
+
+    function loadApplied() {
+      try {
+        return JSON.parse(localStorage.getItem(storageKey) || "{}");
+      } catch {
+        return {};
+      }
+    }
+
+    function saveApplied() {
+      localStorage.setItem(storageKey, JSON.stringify(state.applied));
+    }
+
+    function uniqueValues(key) {
+      return ["All", ...new Set(JOBS.map((job) => job[key]).sort((a, b) => a.localeCompare(b)))];
+    }
+
+    function populateSelect(select, values) {
+      select.innerHTML = values
+        .map((value) => `<option value="${value}">${value}</option>`)
+        .join("");
+    }
+
+    function daysAgo(date) {
+      const now = new Date("2026-06-19T00:00:00Z");
+      const then = new Date(date + "T00:00:00Z");
+      const diff = Math.round((now - then) / 86400000);
+      if (diff <= 0) return "today";
+      if (diff === 1) return "1 day ago";
+      return `${diff} days ago`;
+    }
+
+    function prettyDate(date) {
+      return new Intl.DateTimeFormat("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric"
+      }).format(new Date(date + "T00:00:00Z"));
+    }
+
+    function fitScore(fit) {
+      return { High: 3, Medium: 2, Watch: 1 }[fit] || 0;
+    }
+
+    function matches(job) {
+      const haystack = [
+        job.title,
+        job.company,
+        job.category,
+        job.region,
+        job.source,
+        job.note
+      ].join(" ").toLowerCase();
+
+      const searchOk = !state.search || haystack.includes(state.search.toLowerCase());
+      const categoryOk = state.category === "All" || job.category === state.category;
+      const regionOk = state.region === "All" || job.region === state.region;
+      const fitOk = state.fit === "All" || job.fit === state.fit;
+
+      return searchOk && categoryOk && regionOk && fitOk;
+    }
+
+    function sortJobs(jobs) {
+      const sorted = [...jobs];
+      sorted.sort((a, b) => {
+        if (state.sortKey === "fit") {
+          const delta = fitScore(b.fit) - fitScore(a.fit);
+          if (delta !== 0) return state.sortDir === "desc" ? delta : -delta;
+        }
+
+        const left =
+          state.sortKey === "fit"
+            ? Date.parse(a.posted + "T00:00:00Z")
+            : Date.parse(a[state.sortKey] + "T00:00:00Z");
+        const right =
+          state.sortKey === "fit"
+            ? Date.parse(b.posted + "T00:00:00Z")
+            : Date.parse(b[state.sortKey] + "T00:00:00Z");
+
+        return state.sortDir === "desc" ? right - left : left - right;
+      });
+      return sorted;
+    }
+
+    function renderStats() {
+      const categories = new Set(JOBS.map((job) => job.category)).size;
+      const appliedCount = Object.keys(state.applied).filter((key) => state.applied[key]).length;
+      const freshCount = JOBS.filter((job) => Date.parse(job.posted + "T00:00:00Z") >= Date.parse("2026-06-10T00:00:00Z")).length;
+      const statsData = [
+        { value: JOBS.length, label: "curated roles" },
+        { value: categories, label: "role buckets" },
+        { value: freshCount, label: "posted since Jun 10" },
+        { value: appliedCount, label: "marked applied" }
+      ];
+
+      stats.innerHTML = statsData
+        .map((item) => `<div class="stat"><strong>${item.value}</strong><span>${item.label}</span></div>`)
+        .join("");
+    }
+
+    function pillClass(fit) {
+      return fit === "High"
+        ? "pill-fit-high"
+        : fit === "Medium"
+          ? "pill-fit-medium"
+          : "pill-fit-watch";
+    }
+
+    function renderBoard() {
+      const filtered = sortJobs(JOBS.filter(matches));
+      const appliedCount = filtered.filter((job) => state.applied[job.url]).length;
+
+      summary.textContent = `${filtered.length} role${filtered.length === 1 ? "" : "s"} shown · ${appliedCount} already marked applied in this view`;
+
+      if (!filtered.length) {
+        board.innerHTML = `
+          <div class="empty">
+            No roles match these filters right now.<br>
+            Try widening the region, switching fit level, or clearing the search box.
+          </div>
+        `;
+        renderStats();
+        return;
+      }
+
+      board.innerHTML = filtered.map((job) => {
+        const applied = Boolean(state.applied[job.url]);
+        return `
+          <article class="job-card ${applied ? "applied" : ""}">
+            <div class="job-main">
+              <div class="job-top">
+                <div class="job-title">${job.title}</div>
+                <span class="pill ${pillClass(job.fit)}">${job.fit} fit</span>
+              </div>
+              <div class="job-meta">
+                <span>${job.company}</span>
+                <span>·</span>
+                <span>${job.category}</span>
+                <span>·</span>
+                <span>${job.region}</span>
+                <span>·</span>
+                <span>${job.source}</span>
+              </div>
+              <p class="job-note">${job.note}</p>
+              <div class="job-meta">
+                <span class="mini-tag">Published ${prettyDate(job.posted)}</span>
+                <span class="mini-tag">${daysAgo(job.posted)}</span>
+                <span class="mini-tag">Added ${prettyDate(job.added)}</span>
+              </div>
+            </div>
+            <div class="job-actions">
+              <a class="primary-link" href="${job.url}" target="_blank" rel="noopener noreferrer">Open listing</a>
+              <button class="secondary-button" data-toggle="${job.url}">
+                ${applied ? "Applied" : "Mark as applied"}
+              </button>
+            </div>
+          </article>
+        `;
+      }).join("");
+
+      board.querySelectorAll("[data-toggle]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const key = button.getAttribute("data-toggle");
+          state.applied[key] = !state.applied[key];
+          saveApplied();
+          renderBoard();
+        });
+      });
+
+      renderStats();
+    }
+
+    function bindFilters() {
+      searchInput.addEventListener("input", (event) => {
+        state.search = event.target.value.trim();
+        renderBoard();
+      });
+
+      categorySelect.addEventListener("change", (event) => {
+        state.category = event.target.value;
+        renderBoard();
+      });
+
+      regionSelect.addEventListener("change", (event) => {
+        state.region = event.target.value;
+        renderBoard();
+      });
+
+      sortKeySelect.addEventListener("change", (event) => {
+        state.sortKey = event.target.value;
+        renderBoard();
+      });
+
+      document.querySelectorAll("[data-sort-dir]").forEach((button) => {
+        button.addEventListener("click", () => {
+          state.sortDir = button.getAttribute("data-sort-dir");
+          document.querySelectorAll("[data-sort-dir]").forEach((item) => {
+            item.classList.toggle("active", item === button);
+          });
+          renderBoard();
+        });
+      });
+
+      document.querySelectorAll("[data-fit]").forEach((button) => {
+        button.addEventListener("click", () => {
+          state.fit = button.getAttribute("data-fit");
+          document.querySelectorAll("[data-fit]").forEach((item) => {
+            item.classList.toggle("active", item === button);
+          });
+          renderBoard();
+        });
+      });
+    }
+
+    populateSelect(categorySelect, uniqueValues("category"));
+    populateSelect(regionSelect, uniqueValues("region"));
+    bindFilters();
+    renderStats();
+    renderBoard();
+  </script>
+</body>
+</html>
