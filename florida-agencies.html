@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Florida Agency Outreach Board</title>
+  <meta name="description" content="A curated Florida outreach board for digital marketing and growth agencies, with contact email and careers pages when available.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #eef4f1;
+      --surface: rgba(251, 255, 253, 0.84);
+      --surface-strong: #fdfefa;
+      --ink: #18211b;
+      --muted: #5d6c63;
+      --line: rgba(24, 33, 27, 0.12);
+      --accent: #0d8d66;
+      --accent-soft: rgba(13, 141, 102, 0.12);
+      --warm: #cf6b2f;
+      --warm-soft: rgba(207, 107, 47, 0.12);
+      --blue-soft: rgba(41, 101, 190, 0.12);
+      --blue: #2a5cab;
+      --shadow: 0 24px 60px rgba(33, 61, 46, 0.12);
+      --radius-xl: 30px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Manrope", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(13, 141, 102, 0.16), transparent 28%),
+        radial-gradient(circle at top right, rgba(42, 92, 171, 0.12), transparent 24%),
+        linear-gradient(180deg, #f8fcfa 0%, var(--bg) 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(24, 33, 27, 0.024) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(24, 33, 27, 0.024) 1px, transparent 1px);
+      background-size: 22px 22px;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    select,
+    input {
+      font: inherit;
+    }
+
+    .shell {
+      width: min(1160px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 36px 0 64px;
+    }
+
+    .hero,
+    .toolbar,
+    .card,
+    .footer-note,
+    .stat {
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(18px);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -100px auto;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(13, 141, 102, 0.22), transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 0.95fr;
+      gap: 24px;
+      padding: 34px;
+    }
+
+    .eyebrow,
+    .meta-chip,
+    .mini-tag,
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.58);
+    }
+
+    .eyebrow,
+    .meta-chip {
+      padding: 8px 12px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(13, 141, 102, 0.12);
+    }
+
+    h1 {
+      margin: 18px 0 14px;
+      font-family: "Instrument Serif", serif;
+      font-size: clamp(3rem, 8vw, 5.2rem);
+      font-weight: 400;
+      line-height: 0.94;
+      letter-spacing: -0.03em;
+      max-width: 9ch;
+    }
+
+    .lede {
+      max-width: 60ch;
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .meta-row,
+    .stat-grid,
+    .toolbar,
+    .summary-row,
+    .filters,
+    .board {
+      animation: rise 420ms ease both;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .hero-card {
+      align-self: stretch;
+      display: grid;
+      gap: 14px;
+      padding: 22px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(244, 252, 248, 0.8));
+      border: 1px solid rgba(24, 33, 27, 0.08);
+    }
+
+    .hero-card h2 {
+      margin: 0;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .hero-card ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .hero-card li {
+      display: grid;
+      gap: 4px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed var(--line);
+    }
+
+    .hero-card li:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .hero-card strong {
+      font-size: 15px;
+    }
+
+    .hero-card span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .stat {
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(24, 33, 27, 0.08);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 34px;
+      line-height: 1;
+      margin-bottom: 10px;
+      letter-spacing: -0.04em;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .toolbar {
+      margin-top: 20px;
+      display: grid;
+      gap: 16px;
+      padding: 20px;
+      border-radius: 24px;
+      background: rgba(251, 255, 253, 0.84);
+      border: 1px solid rgba(24, 33, 27, 0.08);
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr 1fr 1fr;
+      gap: 12px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .field select,
+    .field input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.94);
+      color: var(--ink);
+      outline: none;
+    }
+
+    .field select:focus,
+    .field input:focus,
+    .chip-button:focus,
+    .card:focus-within {
+      border-color: rgba(13, 141, 102, 0.48);
+      box-shadow: 0 0 0 4px rgba(13, 141, 102, 0.12);
+    }
+
+    .summary-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip-button {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--ink);
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .chip-button:hover {
+      transform: translateY(-1px);
+      border-color: rgba(24, 33, 27, 0.26);
+    }
+
+    .chip-button.active {
+      background: var(--ink);
+      color: #f5fffb;
+      border-color: transparent;
+    }
+
+    .board {
+      margin-top: 24px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      padding: 22px;
+      border-radius: 24px;
+      background: var(--surface-strong);
+      border: 1px solid rgba(24, 33, 27, 0.08);
+      transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+    }
+
+    .card.sent {
+      opacity: 0.66;
+    }
+
+    .main {
+      display: grid;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .topline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .title {
+      font-size: 22px;
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .card.sent .title {
+      text-decoration: line-through;
+      text-decoration-thickness: 2px;
+    }
+
+    .status-pill,
+    .mini-tag {
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .status-public {
+      color: var(--accent);
+      background: var(--accent-soft);
+      border-color: rgba(13, 141, 102, 0.18);
+    }
+
+    .status-missing {
+      color: var(--warm);
+      background: var(--warm-soft);
+      border-color: rgba(207, 107, 47, 0.18);
+    }
+
+    .status-careers {
+      color: var(--blue);
+      background: var(--blue-soft);
+      border-color: rgba(42, 92, 171, 0.18);
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+      max-width: 75ch;
+    }
+
+    .contact-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .contact-email {
+      font-weight: 700;
+      color: var(--ink);
+      word-break: break-word;
+    }
+
+    .contact-email.missing {
+      color: var(--warm);
+    }
+
+    .actions {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+      justify-items: end;
+      min-width: 180px;
+    }
+
+    .actions a,
+    .actions button {
+      width: 100%;
+      text-align: center;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform 180ms ease, opacity 180ms ease, border-color 180ms ease;
+    }
+
+    .actions a:hover,
+    .actions button:hover {
+      transform: translateY(-1px);
+    }
+
+    .primary-link {
+      background: var(--ink);
+      color: #f5fffb;
+      font-weight: 700;
+    }
+
+    .secondary-link {
+      background: rgba(255, 255, 255, 0.72);
+      border-color: var(--line);
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .secondary-button {
+      background: rgba(255, 255, 255, 0.72);
+      border-color: var(--line);
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .card.sent .secondary-button {
+      background: rgba(13, 141, 102, 0.1);
+      border-color: rgba(13, 141, 102, 0.22);
+      color: var(--accent);
+    }
+
+    .empty,
+    .footer-note {
+      border-radius: 24px;
+      background: rgba(251, 255, 253, 0.76);
+      border: 1px dashed var(--line);
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 34px 20px;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      padding: 18px 20px;
+      border-style: solid;
+      font-size: 13px;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .filters,
+      .stat-grid,
+      .card {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        justify-items: stretch;
+        min-width: 0;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        width: min(100vw - 20px, 1160px);
+        padding-top: 18px;
+      }
+
+      .hero-grid,
+      .toolbar,
+      .card {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">
+            <span class="dot"></span>
+            Researched on June 19, 2026
+          </div>
+          <h1>Florida Agency Outreach</h1>
+          <p class="lede">
+            A Florida-first prospecting board for Hugo: digital marketing, growth, SEO, paid media,
+            creative, and full-service agencies worth contacting directly with a resume and quick intro.
+          </p>
+          <div class="meta-row">
+            <span class="meta-chip">Contact email when publicly listed</span>
+            <span class="meta-chip">Careers page when available</span>
+            <span class="meta-chip">Sent status saved in your browser</span>
+          </div>
+        </div>
+        <aside class="hero-card">
+          <h2>How to use this board</h2>
+          <ul>
+            <li>
+              <strong>Target the right shop</strong>
+              <span>Start with agencies where performance, growth, paid media, SEO, or lifecycle work overlaps most with your background.</span>
+            </li>
+            <li>
+              <strong>Use public email when it exists</strong>
+              <span>If there is no email listed, the card still links the official contact page and careers page so nothing gets lost.</span>
+            </li>
+            <li>
+              <strong>Track outreach cleanly</strong>
+              <span>Mark each agency after sending your CV so you do not repeat effort or lose follow-up context.</span>
+            </li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section class="stat-grid" id="stats"></section>
+
+    <section class="toolbar">
+      <div class="filters">
+        <div class="field">
+          <label for="search">Search</label>
+          <input id="search" type="search" placeholder="Agency, city, specialty or note">
+        </div>
+        <div class="field">
+          <label for="city">City</label>
+          <select id="city"></select>
+        </div>
+        <div class="field">
+          <label for="specialty">Specialty</label>
+          <select id="specialty"></select>
+        </div>
+        <div class="field">
+          <label for="contactFilter">Public email</label>
+          <select id="contactFilter">
+            <option value="All">All</option>
+            <option value="Public">Has public email</option>
+            <option value="Missing">No public email</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="summary-row">
+        <div id="summary">Loading agencies...</div>
+        <div class="chip-group">
+          <button class="chip-button active" data-status="All">All agencies</button>
+          <button class="chip-button" data-status="Not sent">Not sent</button>
+          <button class="chip-button" data-status="Sent">CV sent</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="board" id="board"></section>
+
+    <section class="footer-note">
+      This board was manually assembled from official agency websites on <strong>June 19, 2026</strong>.
+      Public email availability varies a lot by agency, so some cards deliberately point you to the contact page instead.
+    </section>
+  </div>
+
+  <script>
+    const AGENCIES = [
+      {
+        name: "South Street & Co.",
+        city: "Orlando",
+        specialty: "SEO / PPC / Web Design",
+        email: "hello@southstreetmarketing.com",
+        website: "https://southstreetmarketing.com/",
+        contactUrl: "https://southstreetmarketing.com/contact/",
+        careersUrl: "https://southstreetmarketing.com/careers/",
+        publicEmail: true,
+        note: "Strong small-agency option in Orlando with clear public contact info and a live careers page."
+      },
+      {
+        name: "Alphametic",
+        city: "Miami",
+        specialty: "SEO / Paid Media / Content",
+        email: "info@alphametic.com",
+        website: "https://alphametic.com/",
+        contactUrl: "https://alphametic.com/contact",
+        careersUrl: "https://alphametic.com/digital-marketing-careers-miami",
+        publicEmail: true,
+        note: "Boutique Miami agency with visible careers content and strong overlap in paid media, analytics, and content."
+      },
+      {
+        name: "Oyova",
+        city: "Jacksonville Beach",
+        specialty: "Digital Marketing / Web / SEO",
+        email: "info@oyova.com",
+        website: "https://www.oyova.com/",
+        contactUrl: "https://www.oyova.com/contact/",
+        careersUrl: "https://www.oyova.com/oyova-careers/",
+        publicEmail: true,
+        note: "Good mix of digital marketing and web/SEO. Official contact page also references St. Petersburg."
+      },
+      {
+        name: "White Shark Media",
+        city: "Miami",
+        specialty: "PPC / SEM / Full-Service Digital",
+        email: "info@whitesharkmedia.com",
+        website: "https://www.whitesharkmedia.com/",
+        contactUrl: "https://www.whitesharkmedia.com/contact-us/",
+        careersUrl: "https://www.whitesharkmedia.com/careers/",
+        publicEmail: true,
+        note: "Performance-heavy Miami agency with public contact details and an established careers section."
+      },
+      {
+        name: "SEO Brand",
+        city: "Boca Raton",
+        specialty: "SEO / PPC / Web Design",
+        email: "info@seobrand.net",
+        website: "https://www.seobrand.com/",
+        contactUrl: "https://www.seobrand.com/contact-us/",
+        careersUrl: "https://www.seobrand.com/careers/",
+        publicEmail: true,
+        note: "Well-known Florida SEO shop with Boca Raton presence and a careers page that currently lists openings."
+      },
+      {
+        name: "ROI Amplified",
+        city: "Tampa",
+        specialty: "Growth / Paid Media / Full-Service",
+        email: "myroi@roiamplified.com",
+        website: "https://roiamplified.com/",
+        contactUrl: "https://roiamplified.com/contact-us/",
+        careersUrl: "https://roiamplified.com/careers-at-roi-amplified/",
+        publicEmail: true,
+        note: "Tampa agency with explicit contact email and a careers page; strong fit for performance and growth work."
+      },
+      {
+        name: "Fractl",
+        city: "Delray Beach",
+        specialty: "Organic Growth / Content / Digital PR",
+        email: "hello@frac.tl",
+        website: "https://www.frac.tl/",
+        contactUrl: "https://www.frac.tl/contact/",
+        careersUrl: "https://www.frac.tl/careers/",
+        publicEmail: true,
+        note: "Best match if you want to also explore content-led growth, digital PR, and organic acquisition angles."
+      },
+      {
+        name: "Savage Global Marketing",
+        city: "Fort Lauderdale",
+        specialty: "Advertising / Social / Video / Web",
+        email: "info@savageglobalmarketing.com",
+        website: "https://www.savageglobalmarketing.com/",
+        contactUrl: "https://www.savageglobalmarketing.com/contact-us/",
+        careersUrl: "https://www.savageglobalmarketing.com/careers/",
+        publicEmail: true,
+        note: "Fort Lauderdale agency with visible contact details and a careers page; broader creative and ad mix."
+      },
+      {
+        name: "Big Sea",
+        city: "St. Petersburg",
+        specialty: "Strategy / Paid Media / Web",
+        email: "hello@bigsea.co",
+        website: "https://bigsea.co/",
+        contactUrl: "https://bigsea.co/contact/",
+        careersUrl: "https://apply.workable.com/big-sea/",
+        publicEmail: true,
+        note: "Useful for strategy-forward outreach. Official site links out to Workable for careers."
+      },
+      {
+        name: "Connect Agency",
+        city: "Jacksonville",
+        specialty: "Advertising / Digital Marketing / Branding",
+        email: "",
+        website: "https://theconnectagency.com/",
+        contactUrl: "https://theconnectagency.com/contact/",
+        careersUrl: "https://theconnectagency.com/careers/",
+        publicEmail: false,
+        note: "Jacksonville full-service agency with a careers page and clear office location, but no public contact email surfaced."
+      },
+      {
+        name: "On The Map Marketing",
+        city: "Miami",
+        specialty: "SEO / Web Design / Digital Marketing",
+        email: "",
+        website: "https://www.onthemap.com/",
+        contactUrl: "https://www.onthemap.com/contact-us/",
+        careersUrl: "https://www.onthemap.com/careers/",
+        publicEmail: false,
+        note: "Miami-based agency with strong SEO focus. Careers page is public, but outreach appears to run through the contact form."
+      },
+      {
+        name: "Chatter Buzz",
+        city: "Orlando",
+        specialty: "Paid Media / CRM / Creative / CRO",
+        email: "",
+        website: "https://www.chatterbuzzmedia.com/",
+        contactUrl: "https://www.chatterbuzzmedia.com/contact-florida-marketing-firm/",
+        careersUrl: "https://www.chatterbuzzmedia.com/orlando-digital-marketing-jobs/",
+        publicEmail: false,
+        note: "Very relevant overlap with performance and growth systems. Public careers page exists; contact appears form-led instead of email-led."
+      }
+    ];
+
+    const storageKey = "florida-agency-outreach-sent";
+    const state = {
+      search: "",
+      city: "All",
+      specialty: "All",
+      contactFilter: "All",
+      status: "All",
+      sent: loadSent()
+    };
+
+    const board = document.getElementById("board");
+    const stats = document.getElementById("stats");
+    const summary = document.getElementById("summary");
+    const searchInput = document.getElementById("search");
+    const citySelect = document.getElementById("city");
+    const specialtySelect = document.getElementById("specialty");
+    const contactSelect = document.getElementById("contactFilter");
+
+    function loadSent() {
+      try {
+        return JSON.parse(localStorage.getItem(storageKey) || "{}");
+      } catch {
+        return {};
+      }
+    }
+
+    function saveSent() {
+      localStorage.setItem(storageKey, JSON.stringify(state.sent));
+    }
+
+    function uniqueValues(key) {
+      return ["All", ...new Set(AGENCIES.map((item) => item[key]).sort((a, b) => a.localeCompare(b)))];
+    }
+
+    function populateSelect(select, values) {
+      select.innerHTML = values
+        .map((value) => `<option value="${value}">${value}</option>`)
+        .join("");
+    }
+
+    function matches(item) {
+      const haystack = [
+        item.name,
+        item.city,
+        item.specialty,
+        item.email,
+        item.note
+      ].join(" ").toLowerCase();
+
+      const searchOk = !state.search || haystack.includes(state.search.toLowerCase());
+      const cityOk = state.city === "All" || item.city === state.city;
+      const specialtyOk = state.specialty === "All" || item.specialty === state.specialty;
+      const contactOk =
+        state.contactFilter === "All" ||
+        (state.contactFilter === "Public" && item.publicEmail) ||
+        (state.contactFilter === "Missing" && !item.publicEmail);
+
+      const sent = Boolean(state.sent[item.website]);
+      const statusOk =
+        state.status === "All" ||
+        (state.status === "Sent" && sent) ||
+        (state.status === "Not sent" && !sent);
+
+      return searchOk && cityOk && specialtyOk && contactOk && statusOk;
+    }
+
+    function renderStats() {
+      const sentCount = Object.keys(state.sent).filter((key) => state.sent[key]).length;
+      const publicEmailCount = AGENCIES.filter((item) => item.publicEmail).length;
+      const careersCount = AGENCIES.filter((item) => Boolean(item.careersUrl)).length;
+      const citiesCount = new Set(AGENCIES.map((item) => item.city)).size;
+      const statsData = [
+        { value: AGENCIES.length, label: "Florida agencies" },
+        { value: publicEmailCount, label: "with public email" },
+        { value: careersCount, label: "with careers page" },
+        { value: sentCount, label: "already contacted" }
+      ];
+
+      stats.innerHTML = statsData
+        .map((item) => `<div class="stat"><strong>${item.value}</strong><span>${item.label}</span></div>`)
+        .join("");
+    }
+
+    function renderBoard() {
+      const filtered = AGENCIES.filter(matches);
+      const sentInView = filtered.filter((item) => state.sent[item.website]).length;
+
+      summary.textContent = `${filtered.length} agenc${filtered.length === 1 ? "y" : "ies"} shown · ${sentInView} marked as CV sent in this view`;
+
+      if (!filtered.length) {
+        board.innerHTML = `
+          <div class="empty">
+            No agencies match these filters right now.<br>
+            Try clearing the search or widening the city and contact filters.
+          </div>
+        `;
+        renderStats();
+        return;
+      }
+
+      board.innerHTML = filtered.map((item) => {
+        const sent = Boolean(state.sent[item.website]);
+        const emailText = item.publicEmail ? item.email : "No public email found";
+        return `
+          <article class="card ${sent ? "sent" : ""}">
+            <div class="main">
+              <div class="topline">
+                <div class="title">${item.name}</div>
+                <span class="status-pill ${item.publicEmail ? "status-public" : "status-missing"}">
+                  ${item.publicEmail ? "Public email" : "Form-first contact"}
+                </span>
+                ${item.careersUrl ? `<span class="status-pill status-careers">Careers page</span>` : ""}
+              </div>
+              <div class="meta">
+                <span>${item.city}</span>
+                <span>·</span>
+                <span>${item.specialty}</span>
+              </div>
+              <p class="note">${item.note}</p>
+              <div class="contact-line">
+                <span class="mini-tag">Contact</span>
+                <span class="contact-email ${item.publicEmail ? "" : "missing"}">${emailText}</span>
+              </div>
+            </div>
+            <div class="actions">
+              <a class="primary-link" href="${item.contactUrl}" target="_blank" rel="noopener noreferrer">Open contact</a>
+              <a class="secondary-link" href="${item.website}" target="_blank" rel="noopener noreferrer">Agency site</a>
+              ${item.careersUrl ? `<a class="secondary-link" href="${item.careersUrl}" target="_blank" rel="noopener noreferrer">Careers</a>` : ""}
+              <button class="secondary-button" data-toggle="${item.website}">
+                ${sent ? "CV sent" : "Mark as sent"}
+              </button>
+            </div>
+          </article>
+        `;
+      }).join("");
+
+      board.querySelectorAll("[data-toggle]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const key = button.getAttribute("data-toggle");
+          state.sent[key] = !state.sent[key];
+          saveSent();
+          renderBoard();
+        });
+      });
+
+      renderStats();
+    }
+
+    function bindFilters() {
+      searchInput.addEventListener("input", (event) => {
+        state.search = event.target.value.trim();
+        renderBoard();
+      });
+
+      citySelect.addEventListener("change", (event) => {
+        state.city = event.target.value;
+        renderBoard();
+      });
+
+      specialtySelect.addEventListener("change", (event) => {
+        state.specialty = event.target.value;
+        renderBoard();
+      });
+
+      contactSelect.addEventListener("change", (event) => {
+        state.contactFilter = event.target.value;
+        renderBoard();
+      });
+
+      document.querySelectorAll("[data-status]").forEach((button) => {
+        button.addEventListener("click", () => {
+          state.status = button.getAttribute("data-status");
+          document.querySelectorAll("[data-status]").forEach((item) => {
+            item.classList.toggle("active", item === button);
+          });
+          renderBoard();
+        });
+      });
+    }
+
+    populateSelect(citySelect, uniqueValues("city"));
+    populateSelect(specialtySelect, uniqueValues("specialty"));
+    bindFilters();
+    renderStats();
+    renderBoard();
+  </script>
+</body>
+</html>
